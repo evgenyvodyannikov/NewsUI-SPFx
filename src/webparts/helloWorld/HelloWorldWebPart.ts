@@ -4,32 +4,43 @@ import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField
 } from '@microsoft/sp-webpart-base';
-import { escape } from '@microsoft/sp-lodash-subset';
+//import { escape } from '@microsoft/sp-lodash-subset';
 
 import styles from './HelloWorldWebPart.module.scss';
 import * as strings from 'HelloWorldWebPartStrings';
 
 export interface IHelloWorldWebPartProps {
   description: string;
+  test: string;
 }
 
 export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorldWebPartProps> {
 
+  private list: string = 'Новости';
+  private categoriesList: string = 'Новости - Категории';
+  private items: Array<Object> = [];
+  private categories: Array<Object> = [];
+  private container: string = '.newsblock-content__wrapper';
+  private categoriesContainer: string = '.news-tags-group';
+  private itemsContainer: string = '.container#news';
+  private pageSize: number = 6;
+  private showFirstNPages: number = 5;
+  private activeCategory: string = '';
+  private activeCategoryColor: string = '';
+  private doHoverOut: boolean = false;
+  private monthNames: Array<string> = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+  private yearsAndMonths: Array<any> = [];
+  private totalNews: number = 0;
+  private totalFeedLength: number = 0;
+  private newsViewPageUrl: string = '';
+  private pagedInfo: Array<any> = [];
+  private currentPageIndex: number = 1;
+
+
   public render(): void {
     this.domElement.innerHTML = `
       <div class="${ styles.helloWorld }">
-        <div class="${ styles.container }">
-          <div class="${ styles.row }">
-            <div class="${ styles.column }">
-              <span class="${ styles.title }">Welcomess to SharePoint!</span>
-              <p class="${ styles.subTitle }">Customize SharePoint experiences using Web Parts.</p>
-              <p class="${ styles.description }">${escape(this.properties.description)}</p>
-              <a href="https://aka.ms/spfx" class="${ styles.button }">
-                <span class="${ styles.label }">Learn more</span>
-              </a>
-            </div>
-          </div>
-        </div>
+       <h1>${this.properties.description} + ${this.properties.test} + ${this.list}</h1>
       </div>`;
   }
 
@@ -50,6 +61,9 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
+                }),
+                PropertyPaneTextField('test', {
+                  label: 'Test'
                 })
               ]
             }
