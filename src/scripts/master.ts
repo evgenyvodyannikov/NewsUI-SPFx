@@ -87,11 +87,24 @@ export function URL_add_parameters(url, paramsArray) { //[{paramKey, paramValue}
 }
 
 
-export function isLocalStorageSupported() {
+export function isLocalStorageSupported(): boolean {
     try {
         return 'localStorage' in window && window["localStorage"] !== null
     }
     catch (e) {
         return false;
     }
+}
+
+export function getPageByRole(role): any {
+    return $.ajax({
+        url: "/_api/web/lists/getbytitle('Страницы сайта')/items?$filter=PortalPageRole/Title eq '" + role + "'&$select=FileRef",
+        type: "GET",
+        async: false,
+        headers: { "accept": "application/json;odata=verbose" }
+    });
+}
+
+export function logError(error): void {
+    console.log(JSON.stringify(error));
 }
