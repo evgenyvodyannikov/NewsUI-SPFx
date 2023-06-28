@@ -156,7 +156,10 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
 
     let current = this;
 
-    $(".news-tags-group").on("click", ".main-tags-item:not(.active)", function (ev) {
+    $(".news-tags-group").on(
+      "click",
+      ".main-tags-item:not(.active)",
+      function (ev) {
         var currentCategoryId = $(ev.target)
           .closest(".main-tags-item")
           .data("categoryid");
@@ -250,21 +253,21 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     });
 
     $(".pagination").on("click", ".pagination-next", function () {
-      //NewsFeed.clean();
-      //var nextUrl = NewsFeed.pagedInfo[NewsFeed.currentPageIndex].next;
-      //NewsFeed.currentPageIndex++;
-      //localStorage["NewsPrevUrlLink"] = localStorage["NewsNextUrlLink"];
-      //localStorage["NewsPageIndex"] = Number(localStorage["NewsPageIndex"])+1;
-      //NewsFeed.getFeed(nextUrl);
+      current.clean();
+      var nextUrl = current.pagedInfo[current.currentPageIndex].next;
+      current.currentPageIndex++;
+      localStorage["NewsPrevUrlLink"] = localStorage["NewsNextUrlLink"];
+      localStorage["NewsPageIndex"] = Number(localStorage["NewsPageIndex"]) + 1;
+      current.getFeed(nextUrl);
     });
 
     $(".pagination").on("click", ".pagination-prev", function () {
-      // NewsFeed.clean();
-      //var prevUrl = NewsFeed.pagedInfo[NewsFeed.currentPageIndex].prev;
-      //NewsFeed.currentPageIndex--;
-      //localStorage["NewsNextUrlLink"] = localStorage["NewsPrevUrlLink"];
-      //localStorage["NewsPageIndex"] = Number(localStorage["NewsPageIndex"])-1;
-      //NewsFeed.getFeed(prevUrl);
+      current.clean();
+      var prevUrl = current.pagedInfo[current.currentPageIndex].prev;
+      current.currentPageIndex--;
+      localStorage["NewsNextUrlLink"] = localStorage["NewsPrevUrlLink"];
+      localStorage["NewsPageIndex"] = Number(localStorage["NewsPageIndex"]) - 1;
+      current.getFeed(prevUrl);
     });
 
     this.init();
@@ -273,51 +276,102 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   protected getTotalCount(url): JQueryXHR {
     let current = this;
 
-    var countUrl = url.replace('$top=' + current.pageSize, '$top=1000');
-    console.log(countUrl)
+    var countUrl = url.replace("$top=" + current.pageSize, "$top=1000");
+    console.log(countUrl);
     return $.ajax({
-        url: countUrl,
-        type: "GET",
-        headers: { "accept": "application/json;odata=verbose" },
-        success: function (data) {
-          current.totalFeedLength = data.d.results.length;
-          console.log(current.totalFeedLength)
-        }
+      url: countUrl,
+      type: "GET",
+      headers: { accept: "application/json;odata=verbose" },
+      success: function (data) {
+        current.totalFeedLength = data.d.results.length;
+        console.log(current.totalFeedLength);
+      },
     });
   }
 
-  protected renderPaging(showNext): any{
+  protected renderPaging(showNext): any {
     let current = this;
-    //var numberOfPages = Math.ceil(itemsCount / NewsFeed.pageSize);
-    //var pageId = Number(GetUrlKeyValue("page", false));
-    //if (pageId == 0) pageId = 1;
     var prevUrl = current.pagedInfo[current.currentPageIndex].prev;
-    var prevUndefined = prevUrl == undefined || prevUrl == '' || prevUrl == null;
-    //var pageIndex = Number(localStorage["NewsPageIndex"]);
+    var prevUndefined =
+      prevUrl == undefined || prevUrl == "" || prevUrl == null;
     if (!prevUndefined && current.currentPageIndex > 1) {
-        //$('.pagination').removeClass('hidden');
-        $(".pagination").append("<a class='pagination-prev' href='#' >&lt; Предыдущая </a>");
+      $(".pagination").append(
+        "<a class='pagination-prev' href='#' >&lt; Предыдущая </a>"
+      );
     }
     var startrange = (current.currentPageIndex - 1) * current.pageSize + 1;
     var endrange = current.currentPageIndex * current.pageSize;
     if (endrange > current.totalFeedLength) endrange = current.totalFeedLength;
-    $("<span class='pagination-item'>" + startrange + " - " + endrange + " из " + current.totalFeedLength + " </span>").appendTo(".pagination");
+    $(
+      "<span class='pagination-item'>" +
+        startrange +
+        " - " +
+        endrange +
+        " из " +
+        current.totalFeedLength +
+        " </span>"
+    ).appendTo(".pagination");
     if (showNext) {
-        //$('.pagination').removeClass('hidden');                           
-        $(".pagination").append("<a class='pagination-next' href='#'> Следующая &gt;</a>");
+      $(".pagination").append(
+        "<a class='pagination-next' href='#'> Следующая &gt;</a>"
+      );
     }
   }
 
   protected getPictureUrl(objArticle): JQueryXHR {
     return $.ajax({
-        url: "/_api/web/lists/getbytitle('Новости - Изображения')/items?$select*,File/ServerRelativeUrl&$expand=File&$filter=ID eq " + objArticle.NewsPictureId,
-        type: "GET",
-        headers: { "accept": "application/json;odata=verbose" },
-        success: function (data) {
-            objArticle.NewsPictureUrl = data.d.results[0].File.ServerRelativeUrl;
-        },
-        error: utils.logError
+      url:
+        "/_api/web/lists/getbytitle('Новости - Изображения')/items?$select*,File/ServerRelativeUrl&$expand=File&$filter=ID eq " +
+        objArticle.NewsPictureId,
+      type: "GET",
+      headers: { accept: "application/json;odata=verbose" },
+      success: function (data) {
+        objArticle.NewsPictureUrl = data.d.results[0].File.ServerRelativeUrl;
+      },
+      error: utils.logError,
     });
+  }
+
+  protected manageLike(postId): void {
+    let current = this;
+
+    let _spPageContextInfo: {userId: any} = {userId: 5};
+
+    $.ajax({
+      url:
+        "/_api/web/lists/getbytitle('Лайки новостей')/items?$filter=LikeAuthorId eq " +
+        _spPageContextInfo.userId +
+        " and NewsArticleId eq " +
+        postId,
+      type: "GET",
+      headers: { accept: "application/json;odata=verbose" },
+      success: function (data) {
+        var isLikeSet = data.d.results.length > 0;
+        if (isLikeSet) {
+          //like was set, unset it
+          current.unsetLike(postId, data.d.results[0].ID);
+        } else {
+          //like is not set, set it
+          current.setLike(postId);
+        }
+      },
+      error: utils.logError,
+    });
+  }
+
+  protected unsetLike(postId: string, likeItemId: string): void {
+    let current = this;
+
+  }
+  protected setLike(postId): void {
+    let _spPageContextInfo = {};
+    var item = {
+      __metadata: { type: "SP.Data.NewsLikesListItem" },
+      //Title: _spPageContextInfo.userLoginName,
+      //LikeAuthorId: _spPageContextInfo.userId,
+      NewsArticleId: postId,
+    };
+
   }
 
 
@@ -354,13 +408,11 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
           "</a>"
       );
 
-      //filter year month
       var queryFilter = "";
       if (current.year != 0 && current.month != 0) {
         var pubDateStart = new Date(current.year, current.month - 1, 1);
         var pubDateEnd = new Date(current.year, current.month, 1);
         pubDateEnd.setTime(pubDateEnd.getTime() - 1000);
-        //pubDateEnd.setDate(pubDateEnd.getDate()-1);
 
         var strSDate = new Date(
           pubDateStart.getTime() - pubDateStart.getTimezoneOffset() * 60000
@@ -424,7 +476,6 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
                 data.d.results.length +
                 "</p>" +
                 "</a>";
-              //.appendTo(NewsFeed.categoriesContainer);
             }
           },
           error: utils.logError,
@@ -447,7 +498,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   protected init(): void {
     let current = this;
 
-    current.activeCategory = Number(utils.getUrlParameter("CategoryID"));
+    current.activeCategory = Number(utils.getUrlParameter("CategoryID")) || 0;
     current.year = Number(utils.getUrlParameter("YearValue")) || 0;
     current.month = Number(utils.getUrlParameter("MonthValue")) || 0;
     let pageId: Number = Number(utils.getUrlParameter("page"));
@@ -488,12 +539,11 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
       error: utils.logError,
     });
 
-    //Event handlers
     $(current.itemsContainer).on(
       "click",
       ".news-content-item-likes-icon-container",
       function () {
-        //this.manageLike($(this).parent().data("articleid"));
+        //current.manageLike($(this).parent().data("articleid"));
       }
     );
   }
@@ -542,9 +592,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     });
   }
 
-  protected loadFilter(): void {
-
-  }
+  protected loadFilter(): void {}
 
   protected getFeed(url: string): void {
     let current = this;
@@ -597,17 +645,20 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   }
 
   protected renderFeed(): void {
+    let current = this;
 
-
-
-    let current = this; 
-
-
-    console.log("RENDER ITEMS: ", current.items)
+    console.log("RENDER ITEMS: ", current.items);
 
     if (current.items.length > 0) {
       var newsHtml = '<div class="row">';
-      current.items.forEach(function (el: {NewsCategory: any, ID: any, NewsPictureUrl: any, Title: any, NewsDescription: string, NewsPublishDate: any}) {
+      current.items.forEach(function (el: {
+        NewsCategory: any;
+        ID: any;
+        NewsPictureUrl: any;
+        Title: any;
+        NewsDescription: string;
+        NewsPublishDate: any;
+      }) {
         var categories = el.NewsCategory.results
           .map(
             (el2) =>
@@ -616,7 +667,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
           .join("");
         var postUrl = current.newsViewPageUrl + el.ID;
         var imageUrl = el.NewsPictureUrl; //? el.КартинкаНовости.Путь + '/' + el.КартинкаНовости.Имя : "/_catalogs/masterpage/box/img/news-big-image.png";
-            console.log('render item: ', el);
+        console.log("render item: ", el);
         newsHtml +=
           '<div class="col-4">' +
           '<div class="news-content-item">' +
@@ -676,20 +727,27 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
       });
       newsHtml += "</div>";
 
-      console.log(newsHtml)
+      console.log(newsHtml);
 
       $(newsHtml).appendTo(current.itemsContainer);
 
-      console.log('aa', $(current.itemsContainer))
+      console.log("aa", $(current.itemsContainer));
 
-      current.items.forEach(function (el: {ID: any}) {
-       //current.getLikesForArticle(el.ID);
+      current.items.forEach(function (el: { ID: any }) {
+        //current.getLikesForArticle(el.ID);
         //current.getCommentsForArticle(el.ID);
         //current.getVisitsForArticle(el.ID);
       });
 
       //small
-      current.items.forEach(function (el: {NewsCategory: any, ID: any, NewsPictureUrl: any, Title: any, NewsDescription: string, NewsPublishDate: any}) {
+      current.items.forEach(function (el: {
+        NewsCategory: any;
+        ID: any;
+        NewsPictureUrl: any;
+        Title: any;
+        NewsDescription: string;
+        NewsPublishDate: any;
+      }) {
         var categories = el.NewsCategory.results
           .map(
             (el2) =>
@@ -759,12 +817,22 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   }
 
   protected formatDate(date): String {
-    let format = new Date(date)
+    let format = new Date(date);
     let month: number = format.getMonth() + 1;
-    let formattedMonth = month < 10 ? '0' + month.toString() : month.toString();
+    let formattedMonth = month < 10 ? "0" + month.toString() : month.toString();
 
-    return `${format.getDate().toString()}.${formattedMonth}.${format.getFullYear()}`;
-}
+    return `${format
+      .getDate()
+      .toString()}.${formattedMonth}.${format.getFullYear()}`;
+  }
+
+  protected clean(): void {
+    let current = this;
+
+    $(current.itemsContainer).html("");
+    $(".pagination").html("");
+    $(".news-content-actual").html("");
+  }
 
   protected get isRenderAsync(): boolean {
     return true;
