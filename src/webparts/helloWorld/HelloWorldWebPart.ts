@@ -94,30 +94,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
             <div class="col">
             <div class="news-control-groups">
                 <div class="news-tags-group" style="display: flex">
-                <a class="main-tags-item active" href="#">
-                    <p class="main-tags-item-title">Все</p>
-                    <p class="main-tags-item-number">115</p>
-                </a>
 
-                <a class="main-tags-item" href="#">
-                    <p class="main-tags-item-title">Компания</p>
-                    <p class="main-tags-item-number">20</p>
-                </a>
-
-                <a class="main-tags-item" href="#">
-                    <p class="main-tags-item-title">Сотрудники</p>
-                    <p class="main-tags-item-number">15</p>
-                </a>
-
-                <a class="main-tags-item" href="#">
-                    <p class="main-tags-item-title">Вакансии</p>
-                    <p class="main-tags-item-number">30</p>
-                </a>
-
-                <a class="main-tags-item" href="#">
-                    <p class="main-tags-item-title">Инвестиции</p>
-                    <p class="main-tags-item-number">40</p>
-                </a>
                 </div>
                 <div class="news-settings-group">
                 <div class="settings-field subscription">
@@ -134,18 +111,11 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
                 <div class="news-archive-header-left">
                 <p class="news-archive-select-title">Месяц</p>
                 <select class="form-select form-select-lg mb-3 custom" aria-label=".form-select-lg example">
-                    <option value="1" selected="">Сентябрь</option>
-                    <option value="2">Октябрь</option>
-                    <option value="3">Ноябрь</option>
+                    
                 </select>
                 </div>
                 <div class="news-archive-header-right">
-                <a class="main-tags-item active" href="#">
-                    <p class="main-tags-item-title">2020</p>
-                </a>
-                <a class="main-tags-item" href="#">
-                    <p class="main-tags-item-title">2019</p>
-                </a>
+                
                 </div>
             </div>
             </div>
@@ -153,44 +123,13 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
         </div>
         <div class="news-content large">
         <div class="container" id="news">
-            <div class="row">
-            <div class="col-4">
-                <div class="news-content-item">
-                <a href="#" class="news-background-image-container">
-                    <img class="news-background-image" src="./img/news-item1.png" />
-                    <p class="news-content-item-category">Компания</p>
-                </a>
-                <div class="news-content-item-info">
-                    <a class="news-content-item-title" href="#">Groupe Beneteau ищет в IFS свою новую опору ERP</a>
-                    <p class="news-content-item-desc">Церемония пройдет в формате онлайн-экскурсии по Третьяковской галерее</p>
-                </div>
-                <div class="news-content-item-footer">
-                    <div class="news-content-item-likes">
-                    <div class="news-content-item-likes-icon-container">
-                        <img class="news-content-item-likes-icon" src="./img/thumbs-up-icon.svg" />
-                    </div>
-                    <p class="news-content-item-likes-number">184</p>
-                    </div>
-                    <div class="news-content-item-footer-right">
-                    <p class="news-content-item-views">62 просмотра</p>
-                    <div class="news-content-item-separator"></div>
-                    <p class="news-content-item-date">12.02.2020</p>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
+
         </div>
         <div class="container" id="pagination">
             <div class="row">
             <div class="col">
                 <div class="pagination">
-                <a class="pagination-prev" href="#"><img class="pagination-prev-arrow" src="" />&lt; Предыдущая</a>
-                <a class="pagination-item" href="#">1</a>
-                <a class="pagination-item active" href="#">2</a>
-                <a class="pagination-item" href="#">3</a>
-                <a class="pagination-item" href="#">4</a>
-                <a class="pagination-next" href="#"><img class="pagination-next-arrow" src="" />Следующая &gt;</a>
+                
                 </div>
             </div>
             </div>
@@ -198,71 +137,17 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
         </div>
         <div class="news-content small">
         <div class="news-content-actual">
-            <div class="news-content-item small">
-            <a href="#" class="news-background-image-container">
-                <img class="news-background-image" src="./img/news-item1.png" />
-                <p class="news-content-item-category">Компания</p>
-            </a>
-            <div class="news-content-item-info">
-                <a class="news-content-item-title" href="#">Организации, инвестирующие в навыки, управленцев</a>
-                <p class="news-content-item-desc">
-                Новое исследование института BearingPoint показывает, как компании могут максимально...
-                </p>
-            </div>
-            <div class="news-content-item-footer">
-                <div class="news-content-item-likes">
-                <div class="news-content-item-likes-icon-container">
-                    <img class="news-content-item-likes-icon" src="./img/thumbs-up-icon.svg" />
-                </div>
-                <p class="news-content-item-likes-number">184</p>
-                </div>
-                <div class="news-content-item-footer-right">
-                <p class="news-content-item-views">62 просмотра</p>
-                <div class="news-content-item-separator"></div>
-                <p class="news-content-item-date">12.02.2020</p>
-                </div>
-            </div>
-            </div>
+            
         </div>
         <div class="news-content-archive">
-            <div class="news-content-item small">
-            <a href="#" class="news-background-image-container">
-                <img class="news-background-image" src="./img/news-item3.png" />
-                <p class="news-content-item-category">Компания</p>
-            </a>
-            <div class="news-content-item-info">
-                <a class="news-content-item-title" href="#">Организации, инвестирующие в навыки, управленцев</a>
-                <p class="news-content-item-desc">
-                Новое исследование института BearingPoint показывает, как компании могут максимально...
-                </p>
-            </div>
-            <div class="news-content-item-footer">
-                <div class="news-content-item-likes">
-                <div class="news-content-item-likes-icon-container">
-                    <img class="news-content-item-likes-icon" src="./img/thumbs-up-icon.svg" />
-                </div>
-                <p class="news-content-item-likes-number">184</p>
-                </div>
-                <div class="news-content-item-footer-right">
-                <p class="news-content-item-views">62 просмотра</p>
-                <div class="news-content-item-separator"></div>
-                <p class="news-content-item-date">12.02.2020</p>
-                </div>
-            </div>
-            </div>
+            
         </div>
         <div class="pagination small">
-            <a class="pagination-prev" href="#"><img class="pagination-prev-arrow" src="" />&lt; Предыдущая</a>
-            <a class="pagination-item" href="#">1</a>
-            <a class="pagination-item active" href="#">2</a>
-            <a class="pagination-item" href="#">3</a>
-            <a class="pagination-item" href="#">4</a>
-            <a class="pagination-next" href="#"><img class="pagination-next-arrow" src="" />Следующая &gt;</a>
+           
         </div>
         </div>
     `;
 
-    console.log(Date.now());
     this.renderCompleted();
   }
 
@@ -271,10 +156,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
 
     let current = this;
 
-    $(".news-tags-group").on(
-      "click",
-      ".main-tags-item:not(.active)",
-      function (ev) {
+    $(".news-tags-group").on("click", ".main-tags-item:not(.active)", function (ev) {
         var currentCategoryId = $(ev.target)
           .closest(".main-tags-item")
           .data("categoryid");
@@ -387,6 +269,57 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
 
     this.init();
   }
+
+  protected getTotalCount(url): JQueryXHR {
+    let current = this;
+
+    var countUrl = url.replace('$top=' + current.pageSize, '$top=1000');
+    console.log(countUrl)
+    return $.ajax({
+        url: countUrl,
+        type: "GET",
+        headers: { "accept": "application/json;odata=verbose" },
+        success: function (data) {
+          current.totalFeedLength = data.d.results.length;
+          console.log(current.totalFeedLength)
+        }
+    });
+  }
+
+  protected renderPaging(showNext): any{
+    let current = this;
+    //var numberOfPages = Math.ceil(itemsCount / NewsFeed.pageSize);
+    //var pageId = Number(GetUrlKeyValue("page", false));
+    //if (pageId == 0) pageId = 1;
+    var prevUrl = current.pagedInfo[current.currentPageIndex].prev;
+    var prevUndefined = prevUrl == undefined || prevUrl == '' || prevUrl == null;
+    //var pageIndex = Number(localStorage["NewsPageIndex"]);
+    if (!prevUndefined && current.currentPageIndex > 1) {
+        //$('.pagination').removeClass('hidden');
+        $(".pagination").append("<a class='pagination-prev' href='#' >&lt; Предыдущая </a>");
+    }
+    var startrange = (current.currentPageIndex - 1) * current.pageSize + 1;
+    var endrange = current.currentPageIndex * current.pageSize;
+    if (endrange > current.totalFeedLength) endrange = current.totalFeedLength;
+    $("<span class='pagination-item'>" + startrange + " - " + endrange + " из " + current.totalFeedLength + " </span>").appendTo(".pagination");
+    if (showNext) {
+        //$('.pagination').removeClass('hidden');                           
+        $(".pagination").append("<a class='pagination-next' href='#'> Следующая &gt;</a>");
+    }
+  }
+
+  protected getPictureUrl(objArticle): JQueryXHR {
+    return $.ajax({
+        url: "/_api/web/lists/getbytitle('Новости - Изображения')/items?$select*,File/ServerRelativeUrl&$expand=File&$filter=ID eq " + objArticle.NewsPictureId,
+        type: "GET",
+        headers: { "accept": "application/json;odata=verbose" },
+        success: function (data) {
+            objArticle.NewsPictureUrl = data.d.results[0].File.ServerRelativeUrl;
+        },
+        error: utils.logError
+    });
+  }
+
 
   protected categoryChanged(catId: Number | String): void {
     if (catId == undefined || catId == 0 || catId == "Все") {
@@ -548,8 +481,8 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
           console.log(current.tests);
           current.renderCategories();
 
-          //NewsFeed.loadFeed();
-          //NewsFeed.loadFilter();
+          current.loadFeed();
+          current.loadFilter();
         }
       },
       error: utils.logError,
@@ -590,7 +523,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
       console.log(pubDateStart, pubDateEnd, strSDate, strEDate);
     }
     if (current.activeCategory != "") {
-      queryFilter.push("NewsCategoryId eq " + current.activeCategory);
+      queryFilter.push("NewsCategoryId eq " + String(current.activeCategory));
     }
 
     var endpointUrl = "/_api/web/lists/getbytitle('Новости')/items";
@@ -607,6 +540,10 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     current.getTotalCount(endpointUrl).done(function (res) {
       current.getFeed(endpointUrl);
     });
+  }
+
+  protected loadFilter(): void {
+
   }
 
   protected getFeed(url: string): void {
@@ -660,7 +597,13 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   }
 
   protected renderFeed(): void {
+
+
+
     let current = this; 
+
+
+    console.log("RENDER ITEMS: ", current.items)
 
     if (current.items.length > 0) {
       var newsHtml = '<div class="row">';
@@ -673,7 +616,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
           .join("");
         var postUrl = current.newsViewPageUrl + el.ID;
         var imageUrl = el.NewsPictureUrl; //? el.КартинкаНовости.Путь + '/' + el.КартинкаНовости.Имя : "/_catalogs/masterpage/box/img/news-big-image.png";
-
+            console.log('render item: ', el);
         newsHtml +=
           '<div class="col-4">' +
           '<div class="news-content-item">' +
@@ -733,12 +676,16 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
       });
       newsHtml += "</div>";
 
+      console.log(newsHtml)
+
       $(newsHtml).appendTo(current.itemsContainer);
 
+      console.log('aa', $(current.itemsContainer))
+
       current.items.forEach(function (el: {ID: any}) {
-        current.getLikesForArticle(el.ID);
-        current.getCommentsForArticle(el.ID);
-        current.getVisitsForArticle(el.ID);
+       //current.getLikesForArticle(el.ID);
+        //current.getCommentsForArticle(el.ID);
+        //current.getVisitsForArticle(el.ID);
       });
 
       //small
@@ -811,9 +758,12 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     }
   }
 
-  public formatDate(date): Date {
-    let result: Date = new Date(date);
-    return date.format("dd.MM.yyyy");
+  protected formatDate(date): String {
+    let format = new Date(date)
+    let month: number = format.getMonth() + 1;
+    let formattedMonth = month < 10 ? '0' + month.toString() : month.toString();
+
+    return `${format.getDate().toString()}.${formattedMonth}.${format.getFullYear()}`;
 }
 
   protected get isRenderAsync(): boolean {
